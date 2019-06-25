@@ -7,8 +7,6 @@ target 'CovNewbie' do
 
   # Pods for CovNewbie
 
-  pod 'Google-Mobile-Ads-SDK'
-
   target 'CovNewbie-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
