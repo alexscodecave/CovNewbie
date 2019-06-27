@@ -52,11 +52,11 @@ class Activities extends React.Component{
 
     showModal = (item) =>{ 
         console.log("showModalRan")
+        console.log(item);
         this.setState({
             showModal:true,
             chosenEventID:item
-        })
-        
+        });
     }
 
     _keyExtractor = (item) => item.id;
@@ -64,9 +64,8 @@ class Activities extends React.Component{
     _renderItem = ({item})=>{
         var cardImage = item.images[0]["url"];
         var itemID = item.id;
-        console.log("_renderItem:" + itemID)
         return(
-            <TouchableOpacity onPress={()=>this.showModal(itemID)}>
+            <TouchableOpacity onPress={()=>this.showModal(item)}>
         <Card image={{uri:cardImage}} imageStyle={{width:'100%'}}>
             
             <Text style={[styles.customFont,{color:'black',textAlign:'center'}]}>{item.name}</Text>
@@ -91,7 +90,10 @@ class Activities extends React.Component{
 
                 />
 
-                <ActivitiesModal modalIsVisible={this.state.showModal} eventID={this.state.chosenEventID}/>
+                <ActivitiesModal 
+                    modalIsVisible={this.state.showModal} 
+                    eventID={this.state.chosenEventID}
+                    />
                 
             </View>
         )

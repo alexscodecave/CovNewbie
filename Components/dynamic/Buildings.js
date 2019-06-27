@@ -1,8 +1,10 @@
 import React from 'react';
-import {Text,View,StyleSheet,Dimensions,PermissionsAndroid,Geolocation,TouchableOpacity,ActivityIndicator} from 'react-native';
+import {Text,View,StyleSheet,Dimensions
+    ,PermissionsAndroid
+    ,Geolocation
+    ,Platform} from 'react-native';
 import Carousel,{Pagination} from 'react-native-snap-carousel';
 import MapView,{Marker, Polyline} from 'react-native-maps';
-import Permissions from 'react-native-permissions';
 import Axios from 'axios';
 import secretkey from '../../assets/API/important';
 import polyline from '@mapbox/polyline';
@@ -47,12 +49,33 @@ class Buildings extends React.Component{
             drivingDistance:'',
             transitDistance:'',
             matrixDistanceArray:[],
-            loading:true
+            
+
+        }
+
+        this.requestForPermission = this.requestForPermission.bind(this);
+    }
+
+    async requestForPermission(){
+        try{
+            const granted = await PermissionsAndroid.
+            request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,{
+                'title':"Permission title",
+                'message':"Permission message"
+            });
+
+            if(granted===PermissionsAndroid.RESULTS.GRANTED){
+                console.log("You can read the permissions now");
+            }else{
+                console.log("permission denied");
+            }
+        }catch(Err){
+            console.log("Error: " + Err);
         }
     }
 
     componentDidMount(){
-        
+        this.requestForPermission();
         navigator.geolocation.getCurrentPosition((position) => {
               this.setState({ 
                   userLatitude:position.coords.latitude,
@@ -122,7 +145,7 @@ class Buildings extends React.Component{
         });
               
             },
-            error => Alert.alert(error.message),
+            error => alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
           );
 
@@ -168,8 +191,7 @@ class Buildings extends React.Component{
                 directionsLat:latitudeRetrieved,
                 directionsLng:longitudeRetrieved,
                 buildingCoordsArray:retrievedBuildingArray,
-                coords:coords,
-                loading:false
+                coords:coords
             })
 
 
@@ -179,17 +201,7 @@ class Buildings extends React.Component{
         })
     }
 
-    requestLocationPermissions = async()=>{
-        const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.FINE_LOCATION,{
-                title:'Cool location permission',
-                message:"MY message",
-                buttonNeutral:"Ask me later",
-                buttonNegative:"Cancel",
-                buttonPositive:"Ok"
-            }
-        );
-    }
+
     _renderItemCarousel ({item, index}) {
         var distance = ""
         switch(index){
@@ -355,7 +367,7 @@ class Buildings extends React.Component{
                     />
                 </View>
                 <View>
-                <ActivityIndicator size="large" animating={this.state.loading}/>
+                
                 </View>
                 <View style={{flex:3}}>
                    <MapView

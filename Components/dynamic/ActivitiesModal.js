@@ -28,7 +28,6 @@ class ActivitiesModal extends React.Component{
             //     eventMin: priceMin,
             //     eventMax:priceMax
             // });
-            alert(this.props.eventID);
 
         })
         .catch(error=>{
@@ -41,6 +40,7 @@ class ActivitiesModal extends React.Component{
     }
 
     renderEventInformation = () =>{
+        console.log()
         const {eventURL,eventType,eventMin,eventMax} = this.state;
         return(
             <Card>
@@ -60,7 +60,7 @@ class ActivitiesModal extends React.Component{
                     <View style={{height:'80%',width:Dimensions.get('window').width,backgroundColor:'white'}}>
                     <Modal isVisible={this.props.modalIsVisible}>
                     <View style={{backgroundColor:'white',height:'80%',width:'95%',}}>
-                        <Text style={styles.customFont}>Activities modal text</Text>
+                        <Text style={[styles.customFont,{textAlign:'center'}]}>Activities modal text</Text>
                         {this.renderEventInformation()}
                         </View>
                     </Modal>
