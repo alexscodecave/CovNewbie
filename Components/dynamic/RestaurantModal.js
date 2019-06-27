@@ -24,7 +24,7 @@ class RestaurantModal extends React.Component{
             openingHours:'',
             reviews:'',
             phoneNumber:'',
-            carouselData:''
+            carouselData:[]
         }
 
     }
@@ -39,11 +39,13 @@ class RestaurantModal extends React.Component{
 
     renderCarouselItem = ({item,index}) =>{
         var renderReviewTime = Moment(item.time).format('DD/MM/YYYY HH:mm');
+        console.log(item);
         return(
-            <View>
-                <Text>{item.author_name}</Text>
-                <Text style={{fontStyle:'italic'}}>{item.text}</Text>
-                <Text>{renderReviewTime}</Text>
+            <View style={{justifyContent:'center',flexDirection:'column'}}>
+                <Text style={{fontStyle:'italic',textAlign:'center'}}>Reviews</Text>
+                <Text style={{textAlign:'center'}}>{item[index].author_name}</Text>
+                <Text style={[styles.customFont,{fontStyle:'italic',width:'100%'}]}>{item[index].text}</Text>
+                <Text style={[styles.customFont,{textAlign:'center'}]}>{renderReviewTime}</Text>
             </View>
         )
     }
@@ -155,6 +157,8 @@ class RestaurantModal extends React.Component{
                         strokeColor="red"
                         />
                     </MapView>
+                    <Text style={[styles.customFont]}>Contact information</Text>
+                        <Text style={[styles.customFont,{width:Dimensions.get('window').width,textAlign:'left'}]}>{phoneNumber}</Text>
                     </View>
                     <View style={{flex:1,flexDirection:'row'}}>
                         <Carousel
@@ -167,9 +171,7 @@ class RestaurantModal extends React.Component{
                             itemHeight={100}
                         />
                     </View>
-                    <View style={{flex:1}}>
-                        <Text style={[styles.customFont,{width:Dimensions.get('window').width,textAlign:'left'}]}>{phoneNumber}</Text>
-                    </View>
+                    
                     <View style={{width:Dimensions.get('window').width}}>
                     <TouchableOpacity onPress={this.props.closeModal}>
                         <Text style={[styles.customFont,{textAlign:'center',backgroundColor:'#22313f',color:'white',padding:8}]}>Close</Text>
