@@ -178,8 +178,16 @@ class Restaurants extends React.Component{
     }
 
     renderCustomCard = ({item}) =>{
-        var isRestaurantOpen = item.opening_hours.open_now;
-        var isRestaurantOpenStyle = item.opening_hours.open_now == true ? "green" : "red"
+        var isRestaurantOpen = ""
+        var isRestaurantOpenStyle = "";
+        console.log(item.opening_hours);
+        if(item.opening_hours==undefined){ //error handling
+            isRestaurantOpen = "No opening hours available"; 
+        }else{
+            isRestaurantOpen = item.opening_hours.open_now;
+            isRestaurantOpenStyle  = item.opening_hours.open_now == true ? "green" : "red"
+        }
+        
         var photoReference = "";
         if(item.photos!==undefined){
             photoReference = item.photos[0].photo_reference;
@@ -192,7 +200,7 @@ class Restaurants extends React.Component{
             <Card image={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${secretkey.secret}`}}>
                 <Text style={styles.customFont}>{item.name}</Text>
                 <Text style={styles.customFont}>{item.vicinity}</Text>
-                <Text style={[styles.customFont,{color:isRestaurantOpenStyle}]}>{isRestaurantOpen==true?"Open now" : "Closed"}</Text>
+                {/* <Text style={[styles.customFont,{color:isRestaurantOpenStyle}]}>{isRestaurantOpen==true?"Open now" : "Closed"}</Text> */}
                 <View style={{flexDirection:'row'}}>{this.priceLevelFormat(item.price_level)}</View>
                 <Rating imageSize={20} readonly  startingValue={roundRating} ratingCount={5}/>
             </Card>

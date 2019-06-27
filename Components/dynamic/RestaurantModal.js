@@ -127,7 +127,7 @@ class RestaurantModal extends React.Component{
             const {userLatitude,userLongitude,phoneNumber} = this.state;
             return(
                 <View style={styles.container}>
-                    <View style={{height:400,width:Dimensions.get('window').width,flex:2}}>
+                    <View style={{height:400,width:Dimensions.get('window').width,flex:2,}}>
                     <MapView
                         style={{height:200,width:Dimensions.get('window').width}}
                         initialRegion={{
@@ -157,7 +157,7 @@ class RestaurantModal extends React.Component{
                         strokeColor="red"
                         />
                     </MapView>
-                    <Text style={[styles.customFont]}>Contact information</Text>
+                    <Text style={[styles.customFont,{textAlign:'center'}]}>Contact information</Text>
                         <Text style={[styles.customFont,{width:Dimensions.get('window').width,textAlign:'left'}]}>{phoneNumber}</Text>
                     </View>
                     <View style={{flex:1,flexDirection:'row'}}>
@@ -189,7 +189,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'white',
-      width:Dimensions.get('window').width
+      width:Dimensions.get('window').width,
+      marginTop:20
     },
     customFont:{
         fontFamily:'OpenSans-Light'
